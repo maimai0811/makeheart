@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div class="heart"></div>
+    </div>
+    <h1>Happy Valentine<br><span>Mộ Khuyên</span></h1>
+    <!-- <audio loop id="audio">
+        <source src="noinaycoanh.mp3">
+    </audio> -->
+    <!-- <audio loop src="noinaycoanh.mp3" id="audio"></audio> -->
+    <iframe src="noinaycoanh.mp3" type="audio/mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+    <audio id="musicplayer" autoplay loop>
+        <source src="noinaycoanh.mp3" />
+      </audio>
+    <script src="anime.min.js"></script>
+    <script>
+             var x = document.getElementById("musicplayer"); 
+        x.play();
+        // document.getElementById('musicplayer').play();
+        // console.log()
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        
+        var x = document.getElementById("musicplayer"); 
+        x.play();
+     
+         // stop microphone stream acquired by getUserMedia
+         stream.getTracks().forEach(function (track) { track.stop(); });
+     });
+        
+        const container = document.getElementById('container');
+        function createHearts(numberHearts) {
+            for (let index = 0; index < numberHearts; index++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.zIndex = Math.floor(Math.random() * 6 + 2);
+                container.appendChild(heart);
+            }
+        }
+        function animateHearts() {
+            anime({
+                targets: '.heart',
+                translateX: function() {
+                    return anime.random(-950, 950);
+                },
+                translateY: function() {
+                    return anime.random(-500, 500);
+                },
+                rotate: 45,
+                scale: function() {
+                    return anime.random(1, 4);
+                },
+                easing: 'easeInOutBack',
+                duration: 3000,
+                delay: anime.stagger(10),
+                complete: animateHearts
+            })
+        }
+        createHearts(70);
+        animateHearts();
+    </script>
+</body>
+</html>
